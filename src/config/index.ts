@@ -10,6 +10,17 @@ export const config = {
   aws: {
     region: process.env.AWS_REGION || 'ap-south-1',
   },
+  puppeteer: {
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--single-process',
+      '--no-zygote',
+      '--no-first-run',
+    ],
+  },
 };
 
 export default config;
