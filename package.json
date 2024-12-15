@@ -1,0 +1,26 @@
+{
+  "name": "pdf-pipeline",
+  "version": "1.0.0",
+  "description": "PDF Pipeline is a Node.js app that reads messages from SQS, generates PDFs using Puppeteer and Mustache, uploads them to S3, and updates status via SQS or webhooks. It supports multiple queues and configurations from a single config file.",
+  "main": "dist/index.js",
+  "author": {
+    "name": "Madhur Goyal",
+    "email": "hi@mgoyal.com",
+    "url": "https://github.com/mgoyal98"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}
