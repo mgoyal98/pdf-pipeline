@@ -32,7 +32,7 @@ export class PDFService {
       await browser.close();
       return pdf;
     } catch (error) {
-      logger.error('Error generating PDF:', error);
+      logger.error('[PDFService] Error generating PDF:', error);
       throw error;
     }
   }
