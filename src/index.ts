@@ -1,14 +1,16 @@
+import { logger } from './utils/logger';
+
 class PDFPipeline {
   constructor() {}
 
   async start() {
-    console.log('PDFPipeline started');
+    logger.info('PDFPipeline started');
   }
 }
 
 const service = new PDFPipeline();
 
 service.start().catch((error) => {
-  console.error('Fatal error:', error);
+  logger.error('Fatal error:', error);
   process.exit(1);
 });
