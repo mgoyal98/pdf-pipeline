@@ -1,3 +1,4 @@
+import config from '../config';
 import winston from 'winston';
 
 export const logger = winston.createLogger({
@@ -6,6 +7,6 @@ export const logger = winston.createLogger({
     winston.format.timestamp({ format: () => Date.now().toString() }),
     winston.format.json()
   ),
-  defaultMeta: { service: 'pdf-pipeline' },
+  defaultMeta: { service: config.app.name, env: config.app.env },
   transports: [new winston.transports.Console()],
 });
