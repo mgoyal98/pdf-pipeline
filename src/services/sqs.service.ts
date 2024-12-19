@@ -42,9 +42,7 @@ export class SQSService {
 
   async deleteMessage(queueUrl: string, receiptHandle: string) {
     try {
-      logger.info('[SQSService] Deleting message', {
-        receiptHandle: receiptHandle,
-      });
+      logger.info('[SQSService] Deleting message');
       const command = new DeleteMessageCommand({
         QueueUrl: queueUrl,
         ReceiptHandle: receiptHandle,
