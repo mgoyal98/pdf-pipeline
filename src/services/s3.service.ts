@@ -1,18 +1,7 @@
 import { S3Client, PutObjectCommand, S3ClientConfig } from '@aws-sdk/client-s3';
 import { config } from '../config';
 import { logger } from '../utils/logger';
-
-export interface IUploadPDFOpts {
-  bucket: string;
-  key: string;
-  pdf: Buffer;
-}
-
-export interface IUploadPDFResponse {
-  bucket: string;
-  key: string;
-  url: string;
-}
+import { IUploadPDFResponse, IUploadPDFOpts } from 'src/interfaces/s3';
 
 export class S3Service {
   private client: S3Client;

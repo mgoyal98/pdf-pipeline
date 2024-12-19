@@ -6,6 +6,7 @@ import { logger } from '../utils/logger';
 
 export class PDFService {
   async generatePDF(
+    queueName: string,
     templatePath: string,
     data: any,
     pdfOptions: PDFOptions = {
@@ -20,6 +21,9 @@ export class PDFService {
     }
   ): Promise<Uint8Array> {
     try {
+      logger.info(`[PDFService] Generating PDF`, {
+        queueName,
+      });
       const template = await fs.readFile(templatePath, 'utf-8');
       const rendered = Mustache.render(template, data);
 
@@ -32,7 +36,9 @@ export class PDFService {
       await browser.close();
       return pdf;
     } catch (error) {
-      logger.error('[PDFService] Error generating PDF:', error);
+      logger.error('[PDFService] Error generating PDF:', error, {
+        queueName,
+      });
       throw error;
     }
   }

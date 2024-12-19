@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { queuesConfig } from './queues.config';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ export const config = {
       '--no-first-run',
     ],
   },
+  queues: queuesConfig,
 };
 
 export default config;
