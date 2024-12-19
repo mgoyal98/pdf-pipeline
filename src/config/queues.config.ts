@@ -10,7 +10,7 @@ export const queuesConfig: IQueueConfig[] = [
     queueUrl: process.env.INVOICE_QUEUE_URL || '',
     templatePath: 'templates/invoice.html',
     outputBucket: process.env.INVOICE_PDF_BUCKET || '',
-    outputPath: 'invoices',
+    outputPath: 'invoices/{{companyId}}/{{invoiceNo}}_{{currentTimestamp}}.pdf',
     pollingDelay: 1000,
     notificationConfig: {
       type: NotificationType.WEBHOOK,
@@ -25,7 +25,7 @@ export const queuesConfig: IQueueConfig[] = [
     queueUrl: process.env.STATEMENT_QUEUE_URL || '',
     templatePath: 'templates/statement.html',
     outputBucket: process.env.STATEMENT_PDF_BUCKET || '',
-    outputPath: 'statements',
+    outputPath: 'statements/{{userId}}/{{endDate}}.pdf',
     pollingDelay: 3000,
     notificationConfig: {
       type: NotificationType.SQS,

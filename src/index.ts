@@ -7,6 +7,9 @@ import { SQSService } from './services/sqs.service';
 import { logger } from './utils/logger';
 import { v4 as uuidv4 } from 'uuid';
 import { withContext } from './utils/context';
+import _ from 'lodash';
+
+_.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
 
 class PDFPipeline {
   private sqsService: SQSService;
@@ -79,12 +82,13 @@ class PDFPipeline {
       });
 
       // Upload to S3
-      const fileName = `${queueConfig.outputPath}/${
-        queueConfig.name
-      }-${Date.now()}.pdf`;
+      const filePath = _.template(queueConfig.outputPath)({
+        currentTimestamp: Date.now(),
+        ...data,
+      });
       const uploadPdfResponse = await this.s3Service.uploadPDF({
         bucket: queueConfig.outputBucket,
-        key: fileName,
+        key: filePath,
         pdf: pdf,
       });
 
@@ -97,6 +101,7 @@ class PDFPipeline {
           pdf: uploadPdfResponse,
           originalMessage: data,
         },
+        headers: queueConfig.notificationConfig.headers,
       });
 
       // Delete message from queue
@@ -117,6 +122,7 @@ class PDFPipeline {
           error: (error as Error).message,
           originalMessage: message.Body,
         },
+        headers: queueConfig.notificationConfig.headers,
       });
     } finally {
       if (queueConfig.pollingDelay) {

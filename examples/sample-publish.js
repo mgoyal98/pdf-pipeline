@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
+const dotenv = require('dotenv');
+const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs');
 
 dotenv.config();
 
@@ -27,6 +27,8 @@ async function sendMessageToQueue(queueUrl, messageBody) {
 // Example usage
 const message = {
   id: '123',
+  companyId: 'test-company',
+  invoiceNo: 'INV-123',
   date: new Date().toISOString(),
   amount: 100,
 };
@@ -36,6 +38,7 @@ sendMessageToQueue(process.env.INVOICE_QUEUE_URL, message)
   .catch((error) => console.error('Failed to send message:', error));
 
 const statementMessage = {
+  userId: 'test-user',
   accountHolder: 'Abc Xyz',
   accountNumber: 'ACCT123456789',
   statementDate: new Date().toISOString(),
