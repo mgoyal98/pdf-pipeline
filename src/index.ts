@@ -5,6 +5,8 @@ import { PDFService } from './services/pdf.service';
 import { S3Service } from './services/s3.service';
 import { SQSService } from './services/sqs.service';
 import { logger } from './utils/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { withContext } from './utils/context';
 
 class PDFPipeline {
   private sqsService: SQSService;
@@ -20,7 +22,7 @@ class PDFPipeline {
   }
 
   async start() {
-    logger.info('PDFPipeline started');
+    logger.info(`${config.app.name} Started`);
     for (const queueConfig of config.queues) {
       this.processQueue(queueConfig);
     }
@@ -28,25 +30,39 @@ class PDFPipeline {
 
   private async processQueue(queueConfig: IQueueConfig) {
     logger.info(`[${queueConfig.name}] Processing queue`, {
+      queueName: queueConfig.name,
       queueUrl: queueConfig.queueUrl,
     });
+
     while (true) {
       try {
-        const messages = await this.sqsService.receiveMessages(queueConfig);
+        const loopId = uuidv4();
 
-        logger.info(`[${queueConfig.name}] Received messages`, {
-          messages: messages.length,
+        await withContext({ loopId, queueName: queueConfig.name }, async () => {
+          const messages = await this.sqsService.receiveMessages(queueConfig);
+
+          logger.info(`[${queueConfig.name}] Received messages`, {
+            messages: messages.length,
+          });
+
+          if (messages.length === 0) {
+            logger.info(`[${queueConfig.name}] No messages received`);
+            return;
+          }
+
+          for (const message of messages) {
+            const messageId = uuidv4();
+            await withContext({ messageId }, async () => {
+              await this.processQueueMessage(queueConfig, message);
+            });
+          }
         });
-
-        for (const message of messages) {
-          await this.processQueueMessage(queueConfig, message);
-        }
       } catch (error) {
         logger.error(
           `[${queueConfig.name}] Error in queue processing loop:`,
           error
         );
-        await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait before retrying
+        await new Promise((resolve) => setTimeout(resolve, 5000));
       }
     }
   }
@@ -88,6 +104,7 @@ class PDFPipeline {
         queueConfig.queueUrl,
         message.ReceiptHandle!
       );
+      logger.info(`[${queueConfig.name}] Message processed`);
     } catch (error) {
       logger.error(`[${queueConfig.name}] Error processing message:`, error);
 
@@ -114,6 +131,6 @@ class PDFPipeline {
 const service = new PDFPipeline();
 
 service.start().catch((error) => {
-  logger.error(`[PDFPipeline] Fatal error:`, error);
+  logger.error(`[${config.app.name}] Fatal error:`, error);
   process.exit(1);
 });

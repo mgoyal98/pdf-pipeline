@@ -25,6 +25,7 @@ export class SQSService {
 
   async receiveMessages(queueConfig: IQueueConfig) {
     try {
+      logger.info('[SQSService] Receiving messages');
       const command = new ReceiveMessageCommand({
         QueueUrl: queueConfig.queueUrl,
         MaxNumberOfMessages: 10,
@@ -41,6 +42,9 @@ export class SQSService {
 
   async deleteMessage(queueUrl: string, receiptHandle: string) {
     try {
+      logger.info('[SQSService] Deleting message', {
+        receiptHandle: receiptHandle,
+      });
       const command = new DeleteMessageCommand({
         QueueUrl: queueUrl,
         ReceiptHandle: receiptHandle,
@@ -54,6 +58,9 @@ export class SQSService {
 
   async sendMessage(opts: ISQSSendMessage) {
     try {
+      logger.info('[SQSService] Sending message', {
+        queueUrl: opts.queueUrl,
+      });
       const command = new SendMessageCommand({
         QueueUrl: opts.queueUrl,
         MessageBody: JSON.stringify(opts.body),

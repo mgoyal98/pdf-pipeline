@@ -30,19 +30,25 @@ export class NotificationService {
         });
       }
     } catch (error) {
-      logger.error('[NotificationService] Error sending notification:', error, {
-        type: opts.type,
-      });
+      logger.error('[NotificationService] Error sending notification:', error);
       throw error;
     }
   }
 
   private async sendToWebhook(opts: IHttpSendOpts) {
-    await axios.post(opts.url, opts.body, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...opts.headers,
-      },
-    });
+    try {
+      logger.info('[NotificationService] Hitting webhook', {
+        url: opts.url,
+      });
+      await axios.post(opts.url, opts.body, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...opts.headers,
+        },
+      });
+    } catch (error) {
+      logger.error('[NotificationService] Error hitting webhook:', error);
+      throw error;
+    }
   }
 }

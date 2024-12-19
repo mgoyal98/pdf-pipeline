@@ -20,6 +20,10 @@ export class S3Service {
 
   async uploadPDF(opts: IUploadPDFOpts): Promise<IUploadPDFResponse> {
     try {
+      logger.info('[S3Service] Uploading file', {
+        bucket: opts.bucket,
+        key: opts.key,
+      });
       const command = new PutObjectCommand({
         Bucket: opts.bucket,
         Key: opts.key,
