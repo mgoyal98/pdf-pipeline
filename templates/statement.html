@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Statement</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      .header {
+        border-bottom: 2px solid #333;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+      .statement-info {
+        margin-bottom: 30px;
+      }
+      .transactions {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+      .transactions th,
+      .transactions td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .transactions th {
+        background-color: #f2f2f2;
+      }
+      .summary {
+        float: right;
+        width: 300px;
+        border: 1px solid #ddd;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Account Statement</h1>
+      <p>Statement Period: <span id="period">{{startDate}} - {{endDate}}</span></p>
+    </div>
+
+    <div class="statement-info">
+      <p><strong>Account Holder:</strong> <span id="accountHolder">{{accountHolder}}</span></p>
+      <p><strong>Account Number:</strong> <span id="accountNumber">{{accountNumber}}</span></p>
+      <p><strong>Statement Date:</strong> <span id="statementDate">{{statementDate}}</span></p>
+    </div>
+
+    <table class="transactions">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Reference</th>
+          <th>Debit</th>
+          <th>Credit</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#transactions}}
+        <tr>
+          <td>{{date}}</td>
+          <td>{{description}}</td>
+          <td>{{reference}}</td>
+          <td>{{debit}}</td>
+          <td>{{credit}}</td>
+          <td>{{balance}}</td>
+        </tr>
+        {{/transactions}}
+      </tbody>
+    </table>
+
+    <div class="summary">
+      <h3>Summary</h3>
+      <p><strong>Opening Balance:</strong> {{openingBalance}}</p>
+      <p><strong>Total Credits:</strong> {{totalCredits}}</p>
+      <p><strong>Total Debits:</strong> {{totalDebits}}</p>
+      <p><strong>Closing Balance:</strong> {{closingBalance}}</p>
+    </div>
+  </body>
+</html>
