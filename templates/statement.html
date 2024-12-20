@@ -4,7 +4,7 @@
     <title>Statement</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: 'Poppins', serif;
         margin: 40px;
       }
       .header {
@@ -40,13 +40,24 @@
   <body>
     <div class="header">
       <h1>Account Statement</h1>
-      <p>Statement Period: <span id="period">{{startDate}} - {{endDate}}</span></p>
+      <p>
+        Statement Period: <span id="period">{{startDate}} - {{endDate}}</span>
+      </p>
     </div>
 
     <div class="statement-info">
-      <p><strong>Account Holder:</strong> <span id="accountHolder">{{accountHolder}}</span></p>
-      <p><strong>Account Number:</strong> <span id="accountNumber">{{accountNumber}}</span></p>
-      <p><strong>Statement Date:</strong> <span id="statementDate">{{statementDate}}</span></p>
+      <p>
+        <strong>Account Holder:</strong>
+        <span id="accountHolder">{{accountHolder}}</span>
+      </p>
+      <p>
+        <strong>Account Number:</strong>
+        <span id="accountNumber">{{accountNumber}}</span>
+      </p>
+      <p>
+        <strong>Statement Date:</strong>
+        <span id="statementDate">{{statementDate}}</span>
+      </p>
     </div>
 
     <table class="transactions">
