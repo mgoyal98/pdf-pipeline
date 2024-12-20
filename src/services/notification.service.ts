@@ -46,9 +46,20 @@ export class NotificationService {
           ...opts.headers,
         },
       });
-    } catch (error) {
-      logger.error('[NotificationService] Error hitting webhook:', error);
-      throw error;
+    } catch (error: any) {
+      const errMessage = `${error?.response?.status} ${error?.response?.statusText}`;
+      const axiosErr = error?.response?.data ? new Error(errMessage) : error;
+      if (error?.response?.data) {
+        logger.error('[NotificationService] Error hitting webhook:', {
+          status: error?.response?.status,
+          statusText: error?.response?.statusText,
+          data: error?.response?.data,
+          message: errMessage,
+        });
+      } else {
+        logger.error('[NotificationService] Error hitting webhook:', axiosErr);
+      }
+      throw axiosErr;
     }
   }
 }

@@ -92,6 +92,12 @@ class PDFPipeline {
         pdf: pdf,
       });
 
+      // Delete message from queue
+      await this.sqsService.deleteMessage(
+        queueConfig.queueUrl,
+        message.ReceiptHandle!
+      );
+
       // Send notification
       await this.notificationService.notify({
         type: queueConfig.notificationConfig.type,
@@ -103,12 +109,6 @@ class PDFPipeline {
         },
         headers: queueConfig.notificationConfig.headers,
       });
-
-      // Delete message from queue
-      await this.sqsService.deleteMessage(
-        queueConfig.queueUrl,
-        message.ReceiptHandle!
-      );
       logger.info(`[${queueConfig.name}] Message processed`);
     } catch (error) {
       logger.error(`[${queueConfig.name}] Error processing message:`, error);
