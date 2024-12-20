@@ -14,7 +14,7 @@ FROM node:20-slim
 
 # Install only the essential Chromium dependencies
 RUN apt-get update \
-    && apt-get install -y \
+    && apt-get install --no-install-recommends -y \
     chromium \
     fonts-liberation \
     libatk-bridge2.0-0 \
@@ -32,7 +32,6 @@ RUN apt-get update \
     libxfixes3 \
     libxrandr2 \
     xdg-utils \
-    --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -40,7 +39,7 @@ WORKDIR /app
 
 # Copy only production dependencies
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Copy built files from builder stage
 COPY --from=builder /app/dist ./dist
