@@ -4,6 +4,9 @@ FROM node:20-slim AS builder
 WORKDIR /app
 
 COPY package*.json ./
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
 RUN npm ci
 
 COPY . .
@@ -37,6 +40,11 @@ RUN apt-get update \
 
 WORKDIR /app
 
+# Set environment variables for Puppeteer
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
+    NODE_ENV=production
+
 # Copy only production dependencies
 COPY package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
@@ -48,11 +56,6 @@ COPY --from=builder /app/dist ./dist
 COPY fonts/ /usr/local/share/fonts/
 COPY templates/ ./templates/
 RUN fc-cache -f -v
-
-# Set environment variables for Puppeteer
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
-    NODE_ENV=production
 
 # Start the application
 CMD ["npm", "start"] 
