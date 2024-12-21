@@ -51,6 +51,7 @@ The app allows you to configure multiple queues, templates, S3 destinations, and
   - **type**: Indicates whether to send a notification to another SQS (`SQS`) or a webhook (`WEBHOOK`).
   - **destination**: The SQS queue URL or webhook endpoint.
   - **headers?**: Optional object containing additional headers (useful for authentication when using webhooks).
+- **pdfOptions?**: Optional Puppeteer PDF configuration options, such as format, margin, or printBackground. This can be used to fine-tune PDF output.
 
 Below is an example of how to set up your queues in the configuration file:
 
