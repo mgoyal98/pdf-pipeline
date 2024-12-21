@@ -2,6 +2,8 @@
 
 **PDF Pipeline** is a Node.js application designed to automate the process of converting HTML templates into PDF documents using Amazon SQS, Puppeteer, and Mustache. After generating the PDFs, it uploads them to AWS S3 and sends status updates via a flexible notification system (Webhooks and SQS). This app supports multiple queues and configurations, all defined through a single configuration file.
 
+![PDF Pipeline](pdf-pipeline.png?raw=true "PDF Pipeline")
+
 ## Table of Contents
 - [Features](#features)
 - [Prerequisites](#-prerequisites)
@@ -161,7 +163,7 @@ Ensure that your AWS credentials and services like SQS and S3 are properly confi
 
 ## Questions or Feedback?
 
-If you have any questions, issues, or suggestions, feel free to open a GitHub [issue]<https://github.com/mgoyal98/pdf-pipeline/issues>. Thank you for using DocWeave!
+If you have any questions, issues, or suggestions, feel free to open a GitHub [issue]<https://github.com/mgoyal98/pdf-pipeline/issues>. Thank you for using PDF Pipeline!
 
 ## License
 
