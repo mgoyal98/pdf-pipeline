@@ -2,6 +2,21 @@
 
 **PDF Pipeline** is a Node.js application designed to automate the process of converting HTML templates into PDF documents using Amazon SQS, Puppeteer, and Mustache. After generating the PDFs, it uploads them to AWS S3 and sends status updates via a flexible notification system (Webhooks and SQS). This app supports multiple queues and configurations, all defined through a single configuration file.
 
+## Table of Contents
+- [Features](#features)
+- [Prerequisites](#-prerequisites)
+- [Configuration](#️-configuration)
+- [Getting Started](#getting-started)
+- [Running the Application](#️-running-the-application)
+  - [Development Mode](#development-mode)
+  - [Production Mode](#production-mode)
+  - [Using Docker](#using-docker)
+- [Process Flow](#-process-flow)
+- [Project Structure](#-project-structure)
+- [Coming Soon](#coming-soon)
+- [Questions or Feedback](#questions-or-feedback)
+- [License](#license)
+
 ## Features
 
 - 🔄 **Queue-based PDF Generation Pipeline** — Integrates seamlessly with SQS for efficient task management.
@@ -139,6 +154,10 @@ Ensure that your AWS credentials and services like SQS and S3 are properly confi
     ├── .dockerignore
     └── package.json
     ```
+
+## Coming Soon
+- 🔌 **Kafka Integration** — Support for Apache Kafka as an alternative message queue system
+- 💾 **Status Database** — Persistent storage to track and query PDF generation status and history
 
 ## Questions or Feedback?
 
