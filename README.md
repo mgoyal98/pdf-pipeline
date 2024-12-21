@@ -24,13 +24,16 @@
 
 The app allows you to configure multiple queues, templates, S3 destinations, and notifications within a single configuration file `(queues.config.ts)` for flexibility and ease of management. Each queue in the array supports unique properties such as:
 
-- **name**: A friendly identifier for your queue.
-- **queueUrl**: The Amazon SQS URL.
-- **templatePath**: The path to your Mustache/HTML template.
+- **name**: A friendly identifier for your queue (e.g., `invoice-queue`).
+- **queueUrl**: The URL of the AWS SQS queue to poll for messages.
+- **templatePath**: Path to the HTML/Mustache template used by Puppeteer to generate PDFs.
 - **outputBucket**: The S3 bucket where PDFs will be uploaded.
-- **outputPath**: The S3 key or file path format (supports Mustache variables).
-- **pollingDelay**: The time interval (in ms) between polls for new messages.
+- **outputPath**: The path (in S3) or filename for the uploaded PDF. You can use Mustache-like variables here (e.g., invoices/{{companyId}}_{{invoiceNo}}.pdf).
+- **pollingDelay**: Time in milliseconds between checks for new messages in the SQS queue.
 - **notificationConfig**: Defines whether to notify via Webhook or SQS upon success/failure.
+  - **type**: Indicates whether to send a notification to another SQS (`SQS`) or a webhook (`WEBHOOK`).
+  - **destination**: The SQS queue URL or webhook endpoint.
+  - **headers?**: Optional object containing additional headers (useful for authentication when using webhooks).
 
 Below is an example of how to set up your queues in the configuration file:
 
@@ -106,7 +109,7 @@ npm run start
 docker build -t pdf-pipeline .
 
 #Run the container
-docker run -p 3000:3000 \
+docker run \
 -e AWS_ACCESS_KEY_ID=your_key \
 -e AWS_SECRET_ACCESS_KEY=your_secret \
 pdf-pipeline

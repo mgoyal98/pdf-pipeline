@@ -79,6 +79,7 @@ class PDFPipeline {
       const pdf = await this.pdfService.generatePDF({
         templatePath: queueConfig.templatePath,
         data,
+        pdfOptions: queueConfig.pdfOptions,
       });
 
       // Upload to S3

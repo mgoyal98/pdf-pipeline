@@ -1,3 +1,4 @@
+import { PDFOptions } from 'puppeteer';
 import { NotificationType } from 'src/enums/notification';
 
 export interface IQueueConfig {
@@ -12,4 +13,5 @@ export interface IQueueConfig {
     destination: string;
     headers?: Record<string, string>;
   };
+  pdfOptions?: PDFOptions;
 }
