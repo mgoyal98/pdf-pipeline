@@ -162,6 +162,20 @@ Ensure that your AWS credentials and services like SQS and S3 are properly confi
 - 🔌 **Kafka Integration** — Support for Apache Kafka as an alternative message queue system
 - 💾 **Status Database** — Persistent storage to track and query PDF generation status and history
 
+## 🌟 Support
+
+If you find this project helpful, please consider:
+
+- Giving it a star on GitHub ⭐
+- Sharing it with others 🗣️
+- [Buying me a coffee ☕](https://razorpay.me/@mgoyal)
+
+## 📫 Contact
+
+- GitHub: [@mgoyal98](https://github.com/mgoyal98)
+- LinkedIn: [Madhur Goyal](https://linkedin.com/in/madhur-goyal)
+- Website: [mgoyal.com](https://mgoyal.com)
+
 ## Questions or Feedback?
 
 If you have any questions, issues, or suggestions, feel free to open a GitHub [issue]<https://github.com/mgoyal98/pdf-pipeline/issues>. Thank you for using PDF Pipeline!
